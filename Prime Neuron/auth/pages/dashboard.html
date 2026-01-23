@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UniFind • Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/common.css" />
+    <link rel="stylesheet" href="../styles/navbar.css" />
+  </head>
+  <body>
+    <div class="app-bg-orbit"></div>
+
+    <header class="app-navbar">
+        <div class="app-navbar-inner">
+            <div class="app-logo-wrap">
+                <div class="app-logo-circle"></div>
+                    <div class="app-logo-text">
+                        <span>UniFind</span>
+                        <span>Parul University • Lost &amp; Found</span>
+                    </div>
+                </div>
+
+                <div class="app-navbar-actions">
+                    <button
+                        class="nav-icon-button nav-sidebar-toggle"
+                        id="nav-sidebar-toggle"
+                    >
+                        ☰
+                    </button>
+                    <div class="theme-toggle">
+                        <div class="theme-toggle-knob"></div>
+                    </div>
+                    <button class="nav-icon-button" id="nav-notifications">🔔</button>
+                    <div class="nav-profile">
+                        <button class="nav-avatar" id="nav-avatar-btn">
+                            <img
+                            id="nav-avatar-img"
+                            src="https://api.dicebear.com/8.x/identicon/svg?seed=student"
+                            alt="profile"
+                            />
+                        </button>
+                    <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+                        <div class="nav-profile-header">
+                            <span class="nav-profile-name" id="nav-profile-name"></span>
+                            <span class="nav-profile-meta" id="nav-profile-meta"></span>
+                        </div>
+                        <div class="nav-profile-item" id="nav-view-profile">
+                            👤 <span>View profile</span>
+                        </div>
+                        <div class="nav-profile-item" data-logout>
+                            ⏏ <span>Logout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="app-main page-enter">
+      <div class="app-layout">
+        <aside class="glass-card app-sidebar">
+          <div>
+            <div class="sidebar-section-title">Control Center</div>
+            <nav class="sidebar-nav">
+              <a
+                class="sidebar-link active"
+                data-page="dashboard"
+                href="./dashboard.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Dashboard</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="lost"
+                href="./report-lost.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Report Lost Item</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="found"
+                href="./report-found.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Report Found Item</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="claim"
+                href="./claim.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Claim Item</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="leaderboard"
+                href="./leaderboard.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Leaderboard</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="rewards"
+                href="./rewards.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>Rewards</span>
+              </a>
+              <a
+                class="sidebar-link"
+                data-page="history"
+                href="./history.html"
+              >
+                <div class="sidebar-link-icon"></div>
+                <span>History</span>
+              </a>
+            </nav>
+          </div>
+          <div class="sidebar-footer">
+            <button class="btn btn-ghost btn-full" data-logout>Logout</button>
+            <span class="text-muted">
+              Session is protected. Logging out clears this device session.
+            </span>
+          </div>
+        </aside>
+
+        <section>
+          <div
+            class="glass-card"
+            style="padding: 18px 20px; margin-bottom: 18px"
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+              "
+            >
+              <div>
+                <h2 class="h2" style="margin: 0 0 4px">
+                  Good to see you, <span id="dash-name"></span>.
+                </h2>
+                <p class="text-muted" style="margin: 0">
+                  This is your UniFind control center. Track reports, matches,
+                  and campus risk in one place.
+                </p>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-end;
+                  gap: 4px;
+                  font-size: 0.8rem;
+                "
+              >
+                <span class="text-muted">
+                  Risk alert:
+                  <strong>Library &amp; Parking Zone 1</strong> currently have
+                  higher loss activity.
+                </span>
+                <span class="badge badge-warning">
+                  <span class="status-dot status-dot-warning"></span>
+                  Matching in progress
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-3">
+            <div class="glass-card form-card">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span class="text-muted">Total reported items</span>
+                <span class="chip">Lost + Found</span>
+              </div>
+              <div
+                style="
+                  margin-top: 10px;
+                  font-size: 1.6rem;
+                  font-weight: 600;
+                "
+                id="dash-total-reported"
+              >
+                0
+              </div>
+              <button id="open-all-items" class="card-click-overlay"></button>
+            </div>
+
+            <div class="glass-card form-card">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span class="text-muted">Total claimed</span>
+                <span class="chip">Verified</span>
+              </div>
+              <div
+                style="
+                  margin-top: 10px;
+                  font-size: 1.6rem;
+                  font-weight: 600;
+                "
+                id="dash-total-claimed"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="glass-card form-card">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span class="text-muted">Reward points</span>
+                <span class="chip">Wallet</span>
+              </div>
+              <div
+                style="
+                  margin-top: 10px;
+                  font-size: 1.6rem;
+                  font-weight: 600;
+                "
+                id="dash-points"
+              >
+                0
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="glass-card"
+            style="padding: 18px 20px; margin-top: 18px"
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+              "
+            >
+              <div>
+                <h3 class="h2" style="margin: 0 0 4px">
+                  Matching pipeline
+                </h3>
+                <p class="text-muted" style="margin: 0">
+                  AI-style engine scores every lost/found pair using category,
+                  location, time, description, and images.
+                </p>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-end;
+                  font-size: 0.8rem;
+                "
+              >
+                <span>
+                  Success rate:
+                  <strong id="dash-success-rate">0%</strong>
+                </span>
+                <span class="text-muted" id="dash-matching-summary"></span>
+              </div>
+            </div>
+
+            <div
+              id="dash-matches"
+              style="
+                margin-top: 14px;
+                display: grid;
+                gap: 10px;
+              "
+            ></div>
+          </div>
+
+          <div
+            class="glass-card"
+            style="padding: 18px 20px; margin-top: 18px"
+          >
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 14px;
+              "
+            >
+              <div>
+                <h3 class="h2" style="margin: 0 0 4px">
+                  Location heatmap (demo)
+                </h3>
+                <p class="text-muted" style="margin: 0">
+                  Zones glow brighter as more reports are linked to them. Use
+                  this to avoid high-risk areas.
+                </p>
+              </div>
+              <div class="badge badge-soft">
+                🔗 Google-Maps-style overlay (frontend prototype)
+              </div>
+            </div>
+
+            <div
+              id="heatmap-zones"
+              style="
+                margin-top: 16px;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+              "
+            ></div>
+
+            <div
+              style="
+                margin-top: 12px;
+                padding: 10px;
+                border-radius: var(--radius-md);
+                background: rgba(248, 250, 252, 0.04);
+                border: 1px dashed rgba(148, 163, 184, 0.4);
+                font-size: 0.8rem;
+                display: flex;
+                gap: 8px;
+              "
+              id="risk-banner"
+            ></div>
+          </div>
+
+          <div
+            class="glass-card"
+            style="padding: 18px 20px; margin-top: 18px"
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+              "
+            >
+              <div>
+                <h3 class="h2" style="margin: 0 0 4px">Trending lost items</h3>
+                <p class="text-muted" style="margin: 0">
+                  Unresolved reports bubbling up from the last 7 days.
+                </p>
+              </div>
+            </div>
+
+            <div
+              id="trending-items"
+              style="
+                margin-top: 14px;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 10px;
+              "
+            ></div>
+          </div>
+
+          <div
+            class="glass-card"
+            style="padding: 18px 20px; margin-top: 18px; margin-bottom: 24px"
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+              "
+            >
+              <div>
+                <h3 class="h2" style="margin: 0 0 4px">QR tagging (demo)</h3>
+                <p class="text-muted" style="margin: 0">
+                  Generate campus QR stickers for bags, bottles, and ID cards.
+                  Scan to land on UniFind report screens.
+                </p>
+              </div>
+              <button class="btn btn-ghost" id="qr-generate-demo">
+                Generate demo QR
+              </button>
+            </div>
+
+            <div
+              id="qr-demo-output"
+              style="
+                margin-top: 14px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                font-size: 0.88rem;
+              "
+            ></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+
+
+    <script src="../scripts/storage.js"></script>
+    <script src="../scripts/authService.js"></script>
+    <script src="../scripts/matchingEngine.js"></script>
+    <script src="../scripts/ui.js"></script>
+    <script src="../scripts/dashboard.js"></script>
+  </body>
+</html>
